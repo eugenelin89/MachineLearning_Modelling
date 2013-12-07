@@ -54,8 +54,21 @@ error_val   = zeros(m, 1);
 % ---------------------- Sample Solution ----------------------
 
 
+theta_cross = zeros(m, size(X,2));
 
+for i = 1:m,
+   X_i = X(1:i, :);
+   y_i= y(1:i);
+   [theta] = trainLinearReg(X_i, y_i, lambda);
+   error_train(i) = sum((X_i * theta - y_i).^2) * 1/(2*i);
+   theta_cross(i,:) = theta';
+end;
 
+for i = 1:m,
+   theta = theta_cross(i,:)';
+   error_val(i) = sum((Xval * theta - yval).^2) * 1/(2*size(yval,1)); 
+
+end
 
 
 
